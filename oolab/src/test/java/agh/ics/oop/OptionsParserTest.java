@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OptionsParserTest {
     @Test
-    void EmptyList() {
+    void emptyList() {
         //given
         String[] array1 = {};
 
@@ -23,7 +23,7 @@ class OptionsParserTest {
     }
 
     @Test
-    void ManyCorrectElements() {
+    void manyCorrectElements() {
         String[] array1 = {"f","b","l","r"};
 
         //when
@@ -35,7 +35,7 @@ class OptionsParserTest {
     }
 
     @Test
-    void CorrectElementsAndIncorrect() {
+    void correctElementsAndIncorrect() {
         String[] array1 = {"aa","f","b","l","cef","r","de"};
 
         //when

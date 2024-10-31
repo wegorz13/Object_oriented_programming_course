@@ -40,12 +40,8 @@ public enum MapDirection {
 
     }
 
-    public Vector2d toUnitVector(MapDirection direction) {
-        return switch (direction){
-            case NORTH -> this.unitVector;
-            case WEST -> this.unitVector;
-            case SOUTH -> this.unitVector;
-            case EAST -> this.unitVector;
+    public Vector2d toUnitVector() {
+        return this.unitVector;
         };
     }
-}
+
