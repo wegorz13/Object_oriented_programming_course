@@ -1,23 +1,24 @@
 package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OptionsParser {
-    public static MoveDirection[] convertDirections (String [] args) {
-        MoveDirection[] directions = new MoveDirection[args.length];
-        int k=0;
-        int d=0;
-        while (k < args.length) {
-            switch (args[k]) {
-                case "f" -> directions[k-d] = MoveDirection.FORWARD;
-                case "b" -> directions[k-d] = MoveDirection.BACKWARD;
-                case "r" -> directions[k-d] = MoveDirection.RIGHT;
-                case "l" -> directions[k-d] = MoveDirection.LEFT;
-                default -> d++;
+    public static List<MoveDirection> convertDirections (String [] args) {
+        // zdecydowałem się na użycie ArrayList zamiast LinkedList ponieważ na ten moment w klasie Simulation
+        // dodajemy do listy n zwierząt raz, a sięgamy po ruchy/zwierzęta z listy wielokrotnie,
+        // z czego pierwsza operacja jest wolniejsza na ArrayList, natomiast druga jest szybsza na ArrayList
+        List<MoveDirection> directions = new ArrayList<>(0);
+
+        for (String dir : args) {
+            switch (dir) {
+                case "f" -> directions.add(MoveDirection.FORWARD);
+                case "b" -> directions.add(MoveDirection.BACKWARD);
+                case "r" -> directions.add(MoveDirection.RIGHT);
+                case "l" -> directions.add(MoveDirection.LEFT);
             }
-            k++;
         }
-        return Arrays.copyOfRange(directions,0,k-d) ;
+        return directions;
     }
 }
