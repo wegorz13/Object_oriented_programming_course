@@ -3,47 +3,50 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OptionsParserTest {
     @Test
-    void EmptyList() {
+    void emptyList() {
         //given
         String[] array1 = {};
 
         //when
-        MoveDirection[] directions1 = OptionsParser.convertDirections(array1);
-        MoveDirection[] example = {MoveDirection.RIGHT};
+        List<MoveDirection> directions1 = OptionsParser.convertDirections(array1);
+        List<MoveDirection> example = List.of(MoveDirection.RIGHT);
+        List<MoveDirection> empty = new ArrayList<>();
 
         //then
-        assertArrayEquals(new MoveDirection[0], directions1);
-        assertFalse(Arrays.equals(example, directions1));
+        assertEquals(empty, directions1);
+        assertNotEquals(example,directions1);
     }
 
     @Test
-    void ManyCorrectElements() {
+    void manyCorrectElements() {
         String[] array1 = {"f","b","l","r"};
 
         //when
-        MoveDirection[] directions1 = OptionsParser.convertDirections(array1);
+        List<MoveDirection> directions1 = OptionsParser.convertDirections(array1);
 
         //then
-        MoveDirection[] expected = {MoveDirection.FORWARD, MoveDirection.BACKWARD,MoveDirection.LEFT, MoveDirection.RIGHT};
-        assertArrayEquals(expected, directions1);
+        List<MoveDirection> expected = List.of(MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.RIGHT);
+        assertEquals(expected, directions1);
     }
 
     @Test
-    void CorrectElementsAndIncorrect() {
+    void correctElementsAndIncorrect() {
         String[] array1 = {"aa","f","b","l","cef","r","de"};
 
         //when
-        MoveDirection[] directions1 = OptionsParser.convertDirections(array1);
+        List<MoveDirection> directions1 = OptionsParser.convertDirections(array1);
 
         //then
-        MoveDirection[] expected = {MoveDirection.FORWARD, MoveDirection.BACKWARD,MoveDirection.LEFT, MoveDirection.RIGHT};
-        assertArrayEquals(expected, directions1);
+        List<MoveDirection> expected = List.of(MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.RIGHT);
+        assertEquals(expected, directions1);
     }
 
 }

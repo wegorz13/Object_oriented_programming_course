@@ -15,16 +15,16 @@ class MapDirectionTest {
         MapDirection south = MapDirection.SOUTH;
 
         //when
-        east = east.next(east);
-        west = west.next(west);
-        north = north.next(north);
-        south = south.next(south);
+        MapDirection south_2 = east.next(east);
+        MapDirection north_2 = west.next(west);
+        MapDirection east_2 = north.next(north);
+        MapDirection west_2 = south.next(south);
 
         //then
-        assertEquals(MapDirection.SOUTH,east);
-        assertEquals(MapDirection.NORTH,west);
-        assertEquals(MapDirection.EAST,north);
-        assertEquals(MapDirection.WEST,south);
+        assertEquals(MapDirection.SOUTH,south_2);
+        assertEquals(MapDirection.NORTH,north_2);
+        assertEquals(MapDirection.EAST,east_2);
+        assertEquals(MapDirection.WEST,west_2);
     }
 
     @Test
@@ -36,15 +36,15 @@ class MapDirectionTest {
         MapDirection south = MapDirection.SOUTH;
 
         //then
-        east = east.previous(east);
-        west = west.previous(west);
-        north = north.previous(north);
-        south = south.previous(south);
+        MapDirection north_2 = east.previous(east);
+        MapDirection south_2 = west.previous(west);
+        MapDirection west_2 = north.previous(north);
+        MapDirection east_2 = south.previous(south);
 
         //then
-        assertEquals(MapDirection.NORTH,east);
-        assertEquals(MapDirection.SOUTH,west);
-        assertEquals(MapDirection.WEST,north);
-        assertEquals(MapDirection.EAST,south);
+        assertEquals(MapDirection.NORTH,north_2);
+        assertEquals(MapDirection.SOUTH,south_2);
+        assertEquals(MapDirection.WEST,west_2);
+        assertEquals(MapDirection.EAST,east_2);
     }
 }
