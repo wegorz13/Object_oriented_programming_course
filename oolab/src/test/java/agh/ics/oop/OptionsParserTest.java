@@ -17,8 +17,8 @@ class OptionsParserTest {
 
         //when
         List<MoveDirection> directions1 = OptionsParser.convertDirections(array1);
-        List<MoveDirection> example = new ArrayList<MoveDirection>() {{add(MoveDirection.RIGHT);}};
-        List<MoveDirection> empty = new ArrayList<MoveDirection>();
+        List<MoveDirection> example = List.of(MoveDirection.RIGHT);
+        List<MoveDirection> empty = new ArrayList<>();
 
         //then
         assertEquals(empty, directions1);
@@ -33,7 +33,7 @@ class OptionsParserTest {
         List<MoveDirection> directions1 = OptionsParser.convertDirections(array1);
 
         //then
-        List<MoveDirection> expected = new ArrayList<MoveDirection>() {{add(MoveDirection.FORWARD); add(MoveDirection.BACKWARD); add(MoveDirection.LEFT); add(MoveDirection.RIGHT);}};
+        List<MoveDirection> expected = List.of(MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.RIGHT);
         assertEquals(expected, directions1);
     }
 
@@ -45,7 +45,7 @@ class OptionsParserTest {
         List<MoveDirection> directions1 = OptionsParser.convertDirections(array1);
 
         //then
-        List<MoveDirection> expected = new ArrayList<MoveDirection>(){{add(MoveDirection.FORWARD); add(MoveDirection.BACKWARD); add(MoveDirection.LEFT); add(MoveDirection.RIGHT);}};
+        List<MoveDirection> expected = List.of(MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.RIGHT);
         assertEquals(expected, directions1);
     }
 

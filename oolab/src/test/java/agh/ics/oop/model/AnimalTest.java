@@ -41,11 +41,11 @@ public class AnimalTest {
 
         //kierunki
 
-        //w prawo
+        //w prawo/ wschód
         animal2.move(MoveDirection.RIGHT);
-        //w lewo
+        //w lewo/ zachód
         animal3.move(MoveDirection.LEFT);
-        //w dol
+        //w dol/ południe
         animal4.move(MoveDirection.RIGHT);
         animal4.move(MoveDirection.RIGHT);
 
@@ -55,9 +55,13 @@ public class AnimalTest {
 
         //krawedzie
 
+        //górna
         animal1.move(MoveDirection.FORWARD);
+        //prawa
         animal2.move(MoveDirection.FORWARD);
+        //lewa
         animal3.move(MoveDirection.FORWARD);
+        //dolna
         animal4.move(MoveDirection.FORWARD);
 
         assertTrue(animal1.isAt(vec_1));
