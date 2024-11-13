@@ -1,40 +1,46 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
-    private final List<MoveDirection> animal_moves;
-    private final List<Animal> animals = new ArrayList<Animal>(0);
+    private final List<MoveDirection> animalMoves;
+    private final List<Animal> animals = new ArrayList<Animal>();
+    private final RectangularMap map;
 
-    public List<MoveDirection> getAnimalMoves() {
-        return this.animal_moves;
+    List<MoveDirection> getAnimalMoves() {
+        return this.animalMoves;
     }
 
-    public List<Animal> getAnimals() {
+    List<Animal> getAnimals() {
         return this.animals;
     }
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> moves){
-        this.animal_moves = moves;
-
+    public Simulation(List<Vector2d> positions, List<MoveDirection> moves, RectangularMap map){
+        this.animalMoves = moves;
+        this.map = map;
         for (Vector2d position : positions){
-            this.animals.add(new Animal(position));
+            Animal animal = new Animal(position);
+            this.animals.add(animal);
+            this.map.place(animal);
+
         }
     }
 
     public void run(){
-        int number_of_animals = this.animals.size();
-        int number_of_moves = this.animal_moves.size();
+        int numberOfAnimals = this.animals.size();
+        int numberOfMoves = this.animalMoves.size();
 
-        for (int i=0;i<number_of_moves;i++){
-            this.animals.get(i % number_of_animals).move(this.animal_moves.get(i));
-            System.out.println("Zwierzę " + i%number_of_animals + " : " + this.animals.get(i%number_of_animals).getPosition().toString());
+        for (int i=0;i<numberOfMoves;i++){
+            this.map.move(this.animals.get(i % numberOfAnimals),this.animalMoves.get(i));
+            System.out.println(this.map);
+
         }
     }
+
+
 
 
 }
