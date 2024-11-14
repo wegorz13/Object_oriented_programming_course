@@ -28,7 +28,7 @@ public class RectangularMap implements WorldMap{
     @Override
     public boolean place(Animal animal) {
         Vector2d position = animal.getPosition();
-        if (position.follows(this.lowerLeftCorner) && position.precedes(this.upperRightCorner) && !isOccupied(position)) {
+        if (canMoveTo(position)) {
             this.animals.put(position,animal);
             return true;
         }
