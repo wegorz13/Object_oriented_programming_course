@@ -36,14 +36,6 @@ public class Animal {
         return this.currentDirection;
     }
 
-    public void setDirection(MapDirection direction) {
-        this.currentDirection = direction;
-    }
-
-    public void setPosition(Vector2d position){
-        this.currentPosition = position;
-    }
-
     public void move(MoveValidator validator, MoveDirection direction){
         switch (direction) {
             case RIGHT -> this.currentDirection = this.currentDirection.next(this.currentDirection);

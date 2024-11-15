@@ -8,16 +8,12 @@ import java.util.Map;
 public class RectangularMap implements WorldMap{
 
     private final Map<Vector2d, Animal> animals = new HashMap<>();
-    private final int width;
-    private final int height;
     private final Vector2d upperRightCorner;
     private final Vector2d lowerLeftCorner= new Vector2d(0,0);
     private final MapVisualizer visualizer= new MapVisualizer(this);
 
     public RectangularMap(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.upperRightCorner = new Vector2d(width,height);
+        this.upperRightCorner = new Vector2d(width-1,height-1);
     }
 
     @Override
