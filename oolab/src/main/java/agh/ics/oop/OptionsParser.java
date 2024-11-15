@@ -9,7 +9,7 @@ public class OptionsParser {
         // zdecydowałem się na użycie ArrayList zamiast LinkedList ponieważ na ten moment w klasie Simulation
         // dodajemy do listy n zwierząt raz, a sięgamy po ruchy/zwierzęta z listy wielokrotnie,
         // z czego pierwsza operacja jest wolniejsza na ArrayList, natomiast druga jest szybsza na ArrayList
-        List<MoveDirection> directions = new ArrayList<>(0);
+        List<MoveDirection> directions = new ArrayList<>(args.length);
 
         for (String dir : args) {
             switch (dir) {

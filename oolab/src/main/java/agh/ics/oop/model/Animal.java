@@ -1,50 +1,63 @@
 package agh.ics.oop.model;
 
 public class Animal {
-    private MapDirection c_direction = MapDirection.NORTH;
-    private Vector2d c_position;
+    private MapDirection currentDirection = MapDirection.NORTH;
+    private Vector2d currentPosition;
 
     private static final Vector2d MAP_LL_CORNER = new Vector2d(0,0);
     private static final Vector2d MAP_UR_CORNER = new Vector2d(4,4);
 
     public Animal(){
-        this.c_position = new Vector2d(2,2);
+        this.currentPosition = new Vector2d(2,2);
     }
 
     public Animal(Vector2d position){
-        this.c_position = position;
+        this.currentPosition = position;
     }
 
     public String toString() {
-        return "current_direction=" + this.c_direction + ", position=" + this.c_position.toString();
+        return switch (this.currentDirection){
+            case NORTH -> "N";
+            case WEST -> "W";
+            case SOUTH -> "S";
+            case EAST -> "E";
+        };
     }
 
     public boolean isAt(Vector2d position){
-        return this.c_position.equals(position);
+        return this.currentPosition.equals(position);
     }
 
     public Vector2d getPosition() {
-        return this.c_position;
+        return this.currentPosition;
     }
 
     public MapDirection getDirection() {
-        return this.c_direction;
+        return this.currentDirection;
     }
 
-    public void move(MoveDirection direction){
+    public void setDirection(MapDirection direction) {
+        this.currentDirection = direction;
+    }
+
+    public void setPosition(Vector2d position){
+        this.currentPosition = position;
+    }
+
+    public void move(MoveValidator validator, MoveDirection direction){
         switch (direction) {
-            case RIGHT -> this.c_direction = this.c_direction.next(this.c_direction);
-            case LEFT -> this.c_direction = this.c_direction.previous(this.c_direction);
+            case RIGHT -> this.currentDirection = this.currentDirection.next(this.currentDirection);
+            case LEFT -> this.currentDirection = this.currentDirection.previous(this.currentDirection);
             case FORWARD -> {
-                Vector2d new_position = this.c_position.add(this.c_direction.toUnitVector());
-                if (new_position.follows(MAP_LL_CORNER) && new_position.precedes(MAP_UR_CORNER)){
-                    this.c_position = new_position;
+                Vector2d newPosition = this.currentPosition.add(this.currentDirection.toUnitVector());
+                if (validator.canMoveTo(newPosition)){
+                    this.currentPosition = newPosition;
                 }
             }
             case BACKWARD -> {
-                Vector2d new_position = this.c_position.subtract(this.c_direction.toUnitVector());
-                if (new_position.follows(MAP_LL_CORNER) && new_position.precedes(MAP_UR_CORNER)) {
-                    this.c_position = new_position;
+                Vector2d newPosition = this.currentPosition.subtract(this.currentDirection.toUnitVector());
+                if (validator.canMoveTo(newPosition )) {
+                    this.currentPosition = newPosition;
                 }
             }
         }
