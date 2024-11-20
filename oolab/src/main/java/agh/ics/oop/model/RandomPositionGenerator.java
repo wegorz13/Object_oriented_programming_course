@@ -5,10 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class RandomPositionGenerator implements Iterable<Vector2d>, Iterator<Vector2d> {
+public class RandomPositionGenerator implements Iterable<Vector2d> {
     private final List<Vector2d> positions;
     private final int grassCount;
-    private int index;
 
     public RandomPositionGenerator(int maxWidth, int maxHeight, int grassCount) {
         this.grassCount = grassCount;
@@ -35,18 +34,20 @@ public class RandomPositionGenerator implements Iterable<Vector2d>, Iterator<Vec
     }
 
     @Override
-    public boolean hasNext() {
-        return index < grassCount && index < positions.size();
-    }
-
-    @Override
-    public Vector2d next() {
-        return positions.get(index++);
-    }
-
-    @Override
     public Iterator<Vector2d> iterator() {
-        return this;
+        return new Iterator<>() {
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < grassCount && index < positions.size();
+            }
+
+            @Override
+            public Vector2d next() {
+                return positions.get(index++);
+            }
+        };
     }
 }
 
