@@ -1,9 +1,7 @@
 package agh.ics.oop.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import static java.lang.Math.*;
 
 public class GrassField extends AbstractWorldMap{
@@ -11,7 +9,13 @@ public class GrassField extends AbstractWorldMap{
 
     public GrassField(int numberOfGrass){
         super(new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE),new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE));
-        generateGrassPosition(numberOfGrass);
+
+        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator((int) floor(sqrt(numberOfGrass*10)), (int) floor(sqrt(numberOfGrass*10)), numberOfGrass);
+
+        for (Vector2d grassPosition : randomPositionGenerator) {
+            grasses.put(grassPosition, new Grass(grassPosition));
+        }
+
     }
 
     @Override
@@ -46,20 +50,20 @@ public class GrassField extends AbstractWorldMap{
         return this.visualizer.draw(sufficientCorners.get(0),sufficientCorners.get(1));
     }
 
-    private void generateGrassPosition(int numberOfGrass){
-        double border = sqrt(numberOfGrass*10);
-        int count=0;
-        while (count<numberOfGrass){
-            int x = (int) floor(random()*border);
-            int y = (int) floor(random()*border);
-            Vector2d position = new Vector2d(x,y);
-
-            if (grasses.get(position)==null){
-                grasses.put(position,new Grass(position));
-                count++;
-            }
-        }
-    }
+//    private void generateGrassPosition(int numberOfGrass){
+//        double border = sqrt(numberOfGrass*10);
+//        int count=0;
+//        while (count<numberOfGrass){
+//            int x = (int) floor(random()*border);
+//            int y = (int) floor(random()*border);
+//            Vector2d position = new Vector2d(x,y);
+//
+//            if (grasses.get(position)==null){
+//                grasses.put(position,new Grass(position));
+//                count++;
+//            }
+//        }
+//    }
 
     @Override
     public List<WorldElement> getElements() {
