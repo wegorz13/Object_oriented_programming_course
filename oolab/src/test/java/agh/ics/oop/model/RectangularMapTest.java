@@ -81,7 +81,7 @@ public class RectangularMapTest {
 
     @Test
     void moveIsCorrect(){
-        RectangularMap map = new RectangularMap(4,4);
+        RectangularMap map = new RectangularMap(5,5);
 
         Vector2d vec1 = new Vector2d(1,4);
         Vector2d vec2 = new Vector2d(4,1);
