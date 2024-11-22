@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-public class Animal {
+public class Animal implements WorldElement{
     private MapDirection currentDirection = MapDirection.NORTH;
     private Vector2d currentPosition;
 
@@ -34,14 +34,6 @@ public class Animal {
 
     public MapDirection getDirection() {
         return this.currentDirection;
-    }
-
-    public void setDirection(MapDirection direction) {
-        this.currentDirection = direction;
-    }
-
-    public void setPosition(Vector2d position){
-        this.currentPosition = position;
     }
 
     public void move(MoveValidator validator, MoveDirection direction){

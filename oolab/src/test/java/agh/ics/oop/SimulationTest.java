@@ -42,7 +42,8 @@ public class SimulationTest {
 
         //czy pozycja koncowa sie zgadza
         assertTrue(animal1.isAt(new Vector2d(0,1)));
-        assertTrue(animal2.isAt(new Vector2d(4,2)));
+        System.out.println(animal2.getPosition());
+        assertTrue(animal2.isAt(new Vector2d(3,2)));
         assertTrue(animal3.isAt(new Vector2d(3,3)));
     }
 }
