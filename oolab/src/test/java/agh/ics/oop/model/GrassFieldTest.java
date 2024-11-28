@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.exceptions.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -9,19 +10,22 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GrassFieldTest {
 
     @Test
-    void objectAtIsCorrect(){
+    void objectAtIsCorrect() throws IncorrectPositionException {
         GrassField field = new GrassField(0);
 
         Vector2d vec1 = new Vector2d(3,3);
         Animal animal1 = new Animal(vec1);
+
+
         field.place(animal1);
+
 
         assertEquals(animal1,field.objectAt(vec1));
         assertNull(field.objectAt(new Vector2d(2, 2)));
     }
 
     @Test
-    void findSufficientCornersIsCorrect(){
+    void findSufficientCornersIsCorrect() throws IncorrectPositionException {
         GrassField field = new GrassField(10);
 
         List<Vector2d> corners1 = field.findSufficientCorners();
@@ -35,8 +39,10 @@ public class GrassFieldTest {
         assertTrue(corners1.get(0).follows(new Vector2d(-10,-10)));
         assertTrue(corners1.get(1).precedes(new Vector2d(10,10)));
 
+
         field.place(animal1);
         field.place(animal2);
+
 
         List<Vector2d> corners2 = field.findSufficientCorners();
         List<Vector2d> correctCorners = List.of(vec2,vec1);
@@ -45,15 +51,17 @@ public class GrassFieldTest {
     }
 
     @Test
-    void getElementsIsCorrect(){
+    void getElementsIsCorrect() throws IncorrectPositionException {
 
         GrassField field = new GrassField(6);
 
         Animal animal1 = new Animal(new Vector2d(2,2));
         Animal animal2 = new Animal(new Vector2d(4,4));
 
+
         field.place(animal1);
         field.place(animal2);
+
 
         List<WorldElement> elements = field.getElements();
 

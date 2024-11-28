@@ -1,36 +1,25 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.exceptions.IncorrectPositionException;
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap{
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
-    private final Vector2d upperRightCorner;
-    private final Vector2d lowerLeftCorner;
     protected final MapVisualizer visualizer= new MapVisualizer(this);
-
-    protected AbstractWorldMap(Vector2d lowerLeftCorner, Vector2d upperRightCorner) {
-        this.upperRightCorner = upperRightCorner;
-        this.lowerLeftCorner = lowerLeftCorner;
-    }
+    private final List<MapChangeListener> subscribers = new LinkedList<>();
 
     @Override
-    public String toString() {
-        return this.visualizer.draw(this.lowerLeftCorner,this.upperRightCorner);
-    }
-
-    @Override
-    public boolean place(Animal animal) {
+    public boolean place(Animal animal) throws IncorrectPositionException {
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
             this.animals.put(position,animal);
+            mapChanged("Animal placed at position: " + position);
             return true;
         }
-        return false;
+        
+        throw new IncorrectPositionException(position);
     }
 
     @Override
@@ -42,6 +31,7 @@ public abstract class AbstractWorldMap implements WorldMap{
         if (!lastPosition.equals(newPosition)){
             this.animals.remove(lastPosition);
             this.animals.put(newPosition,animal);
+            mapChanged("Animal moved to position: " + newPosition);
         }
     }
 
@@ -57,11 +47,33 @@ public abstract class AbstractWorldMap implements WorldMap{
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return (position.follows(this.lowerLeftCorner) && position.precedes(this.upperRightCorner) && !(objectAt(position) instanceof Animal));
+        return !(objectAt(position) instanceof Animal);
     }
 
     @Override
     public List<WorldElement> getElements() {
-        return new ArrayList<WorldElement>(animals.values());
+        return new ArrayList<>(animals.values());
+    }
+
+    @Override
+    public String toString() {
+        Boundary boundaries = this.getCurrentBounds();
+        return this.visualizer.draw(boundaries.lowerLeftCorner(),boundaries.upperRightCorner());
+    }
+
+    public abstract Boundary getCurrentBounds();
+
+    public void addSubscriber (MapChangeListener subscriber){
+        this.subscribers.add(subscriber);
+    }
+
+    public void removeSubscriber (MapChangeListener subscriber){
+        this.subscribers.remove(subscriber);
+    }
+
+    private void mapChanged(String message){
+        for (MapChangeListener subscriber : this.subscribers){
+            subscriber.mapChanged(this,message);
+        }
     }
 }
