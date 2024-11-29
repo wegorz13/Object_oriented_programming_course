@@ -8,8 +8,6 @@ public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
 
     public GrassField(int numberOfGrass){
-        super(new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE),new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE));
-
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator((int) floor(sqrt(numberOfGrass*10)), (int) floor(sqrt(numberOfGrass*10)), numberOfGrass);
 
         for (Vector2d grassPosition : randomPositionGenerator) {
@@ -20,7 +18,7 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public WorldElement objectAt(Vector2d position) {
-        Animal possibleAnimal = (Animal) super.objectAt(position);
+        WorldElement possibleAnimal = super.objectAt(position);
 
         if (possibleAnimal!=null) {
             return possibleAnimal;
@@ -71,5 +69,10 @@ public class GrassField extends AbstractWorldMap{
         elements.addAll(grasses.values());
 
         return elements;
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        return new Boundary(new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE), new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE));
     }
 }

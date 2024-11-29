@@ -1,27 +1,28 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.exceptions.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RectangularMapTest {
 
 
     @Test
-    void isOccupied(){
+    void isOccupied() throws IncorrectPositionException {
         RectangularMap map = new RectangularMap(4,4);
 
         Vector2d vec1 = new Vector2d(1,3);
 
         assertFalse(map.isOccupied(vec1));
-        map.place(new Animal(vec1));
+
+        assertTrue(map.place(new Animal(vec1)));
+
+
         assertTrue(map.isOccupied(vec1));
     }
 
     @Test
-    void placeIsCorrect(){
+    void placeIsCorrect() throws IncorrectPositionException {
         RectangularMap map = new RectangularMap(4,4);
 
         Vector2d vec1 = new Vector2d(1,5);
@@ -31,25 +32,26 @@ public class RectangularMapTest {
 
         //zły y
         Animal animal1 = new Animal(vec1);
-        assertFalse(map.place(animal1));
+        assertThrows(IncorrectPositionException.class , () -> map.place(animal1));
         //zły x
         Animal animal2 = new Animal(vec2);
-        assertFalse(map.place(animal2));
+        assertThrows(IncorrectPositionException.class , () -> map.place(animal2));
         //ok
         Animal animal3 = new Animal(vec3);
         assertTrue(map.place(animal3));
         //zajęta pozycja
         Animal animal4 = new Animal(vec4);
-        assertFalse(map.place(animal4));
+        assertThrows(IncorrectPositionException.class , () -> map.place(animal4));
 
     }
 
     @Test
-    void objectAtIsCorrect(){
+    void objectAtIsCorrect() throws IncorrectPositionException {
         RectangularMap map = new RectangularMap(4,4);
 
         Vector2d vec = new Vector2d(2,3);
         Animal animal = new Animal(vec);
+
 
         map.place(animal);
 
@@ -58,7 +60,7 @@ public class RectangularMapTest {
     }
 
     @Test
-    void canMoveToIsCorrect(){
+    void canMoveToIsCorrect() throws IncorrectPositionException {
         RectangularMap map = new RectangularMap(4,4);
 
         Vector2d vec1 = new Vector2d(1,5);
@@ -74,13 +76,15 @@ public class RectangularMapTest {
         assertTrue(map.canMoveTo(vec5));
 
         Animal animal = new Animal(vec5);
+
         map.place(animal);
+
 
         assertFalse(map.canMoveTo(vec5));
     }
 
     @Test
-    void moveIsCorrect(){
+    void moveIsCorrect() throws IncorrectPositionException {
         RectangularMap map = new RectangularMap(5,5);
 
         Vector2d vec1 = new Vector2d(1,4);
@@ -89,15 +93,21 @@ public class RectangularMapTest {
         Vector2d vec4 = new Vector2d(1,0);
 
         Animal animal1 = new Animal(vec1);
+
         map.place(animal1);
+
         Animal animal2 = new Animal(vec2);
         map.place(animal2);
+
         Animal animal3 = new Animal(vec3);
         map.place(animal3);
+
         Animal animal4 = new Animal(vec4);
         map.place(animal4);
+
         Animal animal5 = new Animal();
         map.place(animal5);
+
 
         //KIERUNKI
 
