@@ -8,21 +8,21 @@ public class RectangularMapTest {
 
 
     @Test
-    void isOccupied() throws IncorrectPositionException {
+    void isOccupied()  {
         RectangularMap map = new RectangularMap(4,4);
 
         Vector2d vec1 = new Vector2d(1,3);
 
         assertFalse(map.isOccupied(vec1));
 
-        assertTrue(map.place(new Animal(vec1)));
+        assertDoesNotThrow(() -> map.place(new Animal(vec1)));
 
 
         assertTrue(map.isOccupied(vec1));
     }
 
     @Test
-    void placeIsCorrect() throws IncorrectPositionException {
+    void placeIsCorrect()  {
         RectangularMap map = new RectangularMap(4,4);
 
         Vector2d vec1 = new Vector2d(1,5);
@@ -38,7 +38,7 @@ public class RectangularMapTest {
         assertThrows(IncorrectPositionException.class , () -> map.place(animal2));
         //ok
         Animal animal3 = new Animal(vec3);
-        assertTrue(map.place(animal3));
+        assertDoesNotThrow(() -> map.place(animal3));
         //zajęta pozycja
         Animal animal4 = new Animal(vec4);
         assertThrows(IncorrectPositionException.class , () -> map.place(animal4));

@@ -9,17 +9,24 @@ public abstract class AbstractWorldMap implements WorldMap{
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer visualizer= new MapVisualizer(this);
     private final List<MapChangeListener> subscribers = new LinkedList<>();
+    private static int mapsCreated=0;
+    private final int id;
+
+    protected AbstractWorldMap() {
+        this.id = mapsCreated;
+        mapsCreated++;
+    }
 
     @Override
-    public boolean place(Animal animal) throws IncorrectPositionException {
+    public void place(Animal animal) throws IncorrectPositionException {
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
             this.animals.put(position,animal);
             mapChanged("Animal placed at position: " + position);
-            return true;
         }
-        
+        else{
         throw new IncorrectPositionException(position);
+    }
     }
 
     @Override
@@ -75,5 +82,10 @@ public abstract class AbstractWorldMap implements WorldMap{
         for (MapChangeListener subscriber : this.subscribers){
             subscriber.mapChanged(this,message);
         }
+    }
+
+    @Override
+    public int getId(){
+        return this.id;
     }
 }

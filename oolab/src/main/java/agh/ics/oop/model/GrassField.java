@@ -42,12 +42,6 @@ public class GrassField extends AbstractWorldMap{
         return List.of(lowerLeftPosition,upperRightPosition);
     }
 
-    @Override
-    public String toString() {
-        List<Vector2d> sufficientCorners = findSufficientCorners();
-        return this.visualizer.draw(sufficientCorners.get(0),sufficientCorners.get(1));
-    }
-
 //    private void generateGrassPosition(int numberOfGrass){
 //        double border = sqrt(numberOfGrass*10);
 //        int count=0;
@@ -73,6 +67,7 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public Boundary getCurrentBounds() {
-        return new Boundary(new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE), new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE));
+        List<Vector2d> sufficientCorners = findSufficientCorners();
+        return new Boundary(sufficientCorners.get(0), sufficientCorners.get(1));
     }
 }
