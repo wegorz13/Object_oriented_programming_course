@@ -13,8 +13,10 @@ public abstract class AbstractWorldMap implements WorldMap{
     private final int id;
 
     protected AbstractWorldMap() {
-        this.id = mapsCreated;
-        mapsCreated++;
+        synchronized (this){
+            this.id = mapsCreated;
+            mapsCreated++;
+        }
     }
 
     @Override

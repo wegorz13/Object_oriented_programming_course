@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OptionsParser {
-    public static List<MoveDirection> convertDirections (String [] args) {
-        List<MoveDirection> directions = new ArrayList<>(args.length);
+    public static List<MoveDirection> convertDirections (List<String> args) {
+        List<MoveDirection> directions = new ArrayList<>(args.size());
 
         for (String argument : args) {
             switch (argument) {
