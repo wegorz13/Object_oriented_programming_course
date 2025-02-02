@@ -1,6 +1,4 @@
-package agh.ics.oop.model;
-
-import agh.ics.oop.Simulation;
+package agh.ics.oop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,23 +22,22 @@ public class SimulationEngine {
         }
     }
 
-    public void runAsync(){
-        for (Simulation simulation : this.simulations){
+    public void runAsync() {
+        for (Simulation simulation : this.simulations) {
             Thread thread = new Thread(simulation);
             this.threads.add(thread);
             thread.start();
         }
-        awaitSimulationsEnd();
     }
 
     public void runAsyncInThreadPool(){
         for (Simulation simulation : this.simulations){
             this.executorService.submit(simulation);
         }
-        awaitSimulationsEnd();
+
     }
 
-    private void awaitSimulationsEnd() {
+    public void awaitSimulationsEnd() {
         try {
             executorService.shutdown();
             if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
@@ -52,7 +49,7 @@ public class SimulationEngine {
             }
         }
         catch(InterruptedException e){
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 }
